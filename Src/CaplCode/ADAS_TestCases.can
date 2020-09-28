@@ -1,0 +1,304 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+   byte buffer[8];
+}
+
+void MainTest()
+{
+  TestModuleTitle ("Sensors  Tester");
+  TestModuleDescription ("Checks Visibilty, lighting, Sensors, Motor, Steering, MainScreen.");
+
+  TestGroupBegin("Test Advanced driver assistance systems", "Check the differ message cycle time");
+  TestBatteryChargeLvlEmpty_Temp_25();
+  TestBatteryChargeLvlFull_Temp_50();
+  TestUltraSonicWarningBlanking500ms_Right();
+  //TestUltraSonicWarningBlanking400ms_Right();
+  TestUltraSonicWarningBlanking300ms_Right();
+  //TestUltraSonicWarningBlanking200ms_Right();
+  TestUltraSonicWarningBlanking100ms_Right();
+  TestUltraSonicWarningBlanking500ms_Left();
+  //TestUltraSonicWarningBlanking400ms_Left();
+  TestUltraSonicWarningBlanking300ms_Left();
+  //TestUltraSonicWarningBlanking200ms_Left();
+  TestUltraSonicWarningBlanking100ms_Left();
+  TestGroupEnd();  
+}
+
+testcase TestBatteryChargeLvlEmpty_Temp_25()
+{
+  buffer[0] = 0xE0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x33;
+  buffer[3] = 0x33;
+  buffer[4] = 0x19;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+  
+  if(RS232Send(2,buffer,7)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5); 
+}
+
+testcase TestBatteryChargeLvlFull_Temp_50()
+{
+  int i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[2] = 0x33;
+  buffer[3] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+  if(RS232Send(2,buffer,7)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }  
+  delay(5);
+}
+
+testcase TestUltraSonicWarningBlanking500ms_Right()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[2] = 0x2D;
+  buffer[3] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+/*
+testcase TestUltraSonicWarningBlanking400ms_Right()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[2] = 0x23;
+  buffer[3] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+*/
+testcase TestUltraSonicWarningBlanking300ms_Right()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[2] = 0x19;
+  buffer[3] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+/*
+testcase TestUltraSonicWarningBlanking200ms_Right()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[2] = 0x0F;
+  buffer[3] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+*/
+testcase TestUltraSonicWarningBlanking100ms_Right()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[2] = 0x05;
+  buffer[3] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+
+testcase TestUltraSonicWarningBlanking500ms_Left()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[3] = 0x2D;
+  buffer[2] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+/*
+testcase TestUltraSonicWarningBlanking400ms_Left()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[3] = 0x23;
+  buffer[2] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+*/
+testcase TestUltraSonicWarningBlanking300ms_Left()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[3] = 0x19;
+  buffer[2] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+  
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+
+}
+/*
+testcase TestUltraSonicWarningBlanking200ms_Left()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[3] = 0x0F;
+  buffer[2] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+*/
+testcase TestUltraSonicWarningBlanking100ms_Left()
+{
+  byte i;
+  buffer[0] = 0xE0;
+  buffer[1] = 0x64;
+  buffer[3] = 0x05;
+  buffer[2] = 0x33;
+  buffer[4] = 0x32;
+  buffer[5] = 0x00;
+  buffer[6] = '\n';
+
+    if(RS232Send(2,buffer,7)==1)
+    {
+      TestStepPass();
+    }
+    else
+    {
+      testStepFail();
+    }  
+    delay(5);
+}
+
+
+void delay(int s)
+{
+  int i;
+  for(i=0;i<s;i++)
+  {
+    TestWaitForTimeout(1000);
+  }
+}

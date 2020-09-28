@@ -1,0 +1,148 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+   byte buffer[8];
+}
+
+void MainTest()
+{
+  TestModuleTitle ("Engine Tester");
+ 
+  TestGroupBegin("Test Power Train System ", "Check the differ message cycle time");
+  TestSteerMaxRight();
+  TestSteerMaxLeft();
+  TestSteerMiddle();
+  TestMotorForward();
+  TestMotorBrake();
+  TestMotorReverse();
+  TestMotorBrake();
+  TestGroupEnd();  
+}
+
+testcase TestSteerMaxRight()
+{
+  buffer[0] = 0xA0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0xFF;
+  buffer[4] = '\n';
+  
+  if(RS232Send(2,buffer,5)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+
+testcase TestSteerMaxLeft()
+{
+  buffer[0] = 0xA0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x00;
+  buffer[4] = '\n';
+  
+  if(RS232Send(2,buffer,5)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+
+testcase TestSteerMiddle()
+{
+  buffer[0] = 0xA0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x80;
+  buffer[4] = '\n';
+  
+  if(RS232Send(2,buffer,5)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+
+testcase TestMotorForward()
+{
+  buffer[0] = 0xA0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x01;
+  buffer[3] = 0x80;
+  buffer[4] = '\n';
+  
+  if(RS232Send(2,buffer,5)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(13);
+}
+
+testcase TestMotorBrake()
+{
+  buffer[0] = 0xA0;
+  buffer[1] = 0x01;
+  buffer[2] = 0x00;
+  buffer[3] = 0x80;
+  buffer[4] = '\n';
+  
+  if(RS232Send(2,buffer,5)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(7);
+}
+
+testcase TestMotorReverse()
+{
+  buffer[0] = 0xA0;
+  buffer[1] = 0x00;
+  buffer[2] = 0xFF;
+  buffer[3] = 0x80;
+  buffer[4] = '\n';
+  
+  if(RS232Send(2,buffer,5)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(13);
+}
+
+void delay(int s)
+{
+  int i;
+  for(i=0;i<s;i++)
+  {
+    TestWaitForTimeout(1000);
+  }
+}

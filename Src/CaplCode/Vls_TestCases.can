@@ -1,0 +1,194 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  byte buffer[8];
+}
+
+
+void MainTest()
+{
+  TestModuleTitle ("Lighting  Tester");
+  TestModuleDescription ("Checks Visibilty, lighting, Sensors, Motor, Steering, MainScreen.");
+
+  TestGroupBegin("Test Visbaility and lighting ", "Check the differ message cycle time");
+  TestHeadLight();
+  TestHazradLight();
+  TestRightdLight();
+  TestLeftLight();
+  TestWiper();
+  TestBrake();
+  Test_All_OFF();
+  TestGroupEnd();  
+ 
+  
+}
+
+
+testcase TestHeadLight()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x01;
+  buffer[2] = 0x00;
+  buffer[3] = 0x00;
+  buffer[4] = 0x00;
+  buffer[5] = 0x00;
+  buffer[6] = 0x00;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5); 
+}
+
+testcase TestHazradLight()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x01;
+  buffer[3] = 0x00;
+  buffer[4] = 0x00;
+  buffer[5] = 0x00;
+  buffer[6] = 0x00;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+  
+testcase TestRightdLight()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x00;
+  buffer[4] = 0x01;
+  buffer[5] = 0x00;
+  buffer[6] = 0x00;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+testcase TestLeftLight()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x01;
+  buffer[4] = 0x00;
+  buffer[5] = 0x00;
+  buffer[6] = 0x00;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+testcase TestWiper()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x00;
+  buffer[4] = 0x00;
+  buffer[5] = 0x01;
+  buffer[6] = 0x00;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+
+testcase TestBrake()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x00;
+  buffer[4] = 0x00;
+  buffer[5] = 0x00;
+  buffer[6] = 0x01;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(5);
+}
+
+testcase Test_All_OFF()
+{
+  buffer[0] = 0xF0;
+  buffer[1] = 0x00;
+  buffer[2] = 0x00;
+  buffer[3] = 0x00;
+  buffer[4] = 0x00;
+  buffer[5] = 0x00;
+  buffer[6] = 0x00;
+  buffer[7] = '\n';
+  
+  if(RS232Send(2,buffer,8)==1)
+  {
+    TestStepPass();
+  }
+  else
+  {
+    testStepFail();
+  }
+  delay(1);
+}
+
+
+
+
+void delay(int s)
+{
+  int i;
+  for(i=0;i<s;i++)
+  {
+    TestWaitForTimeout(1000);
+  }
+}

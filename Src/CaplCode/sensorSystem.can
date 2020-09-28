@@ -1,0 +1,66 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+/*
+variables
+{
+  byte brake_State=0;
+  message Front_UltraSonic_State MFront_val;
+  message Rear_UltraSonic_State MRear_val;
+  message Main_UltraSonic_State Mmain_val;
+  message Temperture_state temp_val;
+  msTimer T1;
+}
+
+on message Engine_ACC
+{
+  if(brake_State==0)
+  {
+   // @`Sensors::CarSpeed = this.word(0)/22;
+  }
+}
+
+
+on message Engine_Brake 
+{
+  if(this.byte(0)==1)
+  {
+   // @`Sensors::CarSpeed = 0;
+    brake_State=1;
+  }
+  else
+  {
+    brake_State=0;
+  }
+}
+
+on timer T1 
+{
+  MFront_val.dlc=8;
+  MFront_val.int(0)= @`Sensors::FC_ultasonic;
+  MFront_val.int(1)= @`Sensors::FL_ultrasonic;
+  MFront_val.int(2)= @`Sensors::FR_ultrasonic;
+  output(MFront_val);
+  
+  MFront_val.dlc=8;
+  MRear_val.int(0)= @`Sensors::RC_ultasonic;
+  MRear_val.int(1)= @`Sensors::RL_ultrasonic;
+  MRear_val.int(2)= @`Sensors::RR_ultrasonic;
+  output(MRear_val);
+  
+  MFront_val.dlc=8;
+  Mmain_val.dword(0)=@`Sensors::Main_ultrasonic;
+  output(Mmain_val);
+  
+  temp_val.tempertureS=@`Sensors::Temperture;
+  output(temp_val);
+  setTimer(T1,250);
+  
+}
+on start
+{
+  setTimer(T1,25);
+}
+*/
